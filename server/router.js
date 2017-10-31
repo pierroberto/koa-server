@@ -2,30 +2,11 @@ const Koa = require('koa');
 const app = new Koa();
 const Router = require('koa-router');
 const router = new Router();
-const name = require('../controllers/letters');
-const letter = require('../controllers/addletters');
+const name = require('../controllers/get-letters');
+const postLetter = require('../controllers/add-letters');
+const removeLetter = require('../controllers/remove-letters');
 
-
-router.get('/hi', (ctx, next) => {
-  ctx.status = 200;
-});
-
-router.get('/name/:name', ctx => {
-  console.log(ctx.params.name)
-  ctx.status = 200;
-});
-
-router.get('/letter', ctx => {
-  name().then((data, fail) => {
-    ctx.status = 200;
-  })
-});
-
-router.post('/addletter', ctx => {
-  letter([1,'a','b','c']).then((data, fail) => {
-    console.log(data)
-    ctx.status = 200
-  });
-});
-
+router.get('/letter', name);
+router.post('/letter', postLetter);
+router.del('/letter', removeLetter);
 module.exports = router;
